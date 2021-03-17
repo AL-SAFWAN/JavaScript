@@ -5,6 +5,9 @@ html(lang="en")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         link(rel= 'stylesheet' href ='/bower_components/bootstrap/dist/css/bootstrap.css')
+        link(rel= 'stylesheet' href ='/bower_components/bootstrap/dist/css/bootstrap.css')
+        link(rel= 'stylesheet' href ='/css/style.css')
+
         title app
     body
         nav.navbar.navbar-expand-lg.navbar-light.bg-light
@@ -21,6 +24,11 @@ html(lang="en")
 
 
         .container 
+            br
+            != messages('message', locals)
+            if errors 
+                each error, i in errors 
+                   div(class='alert alert-danger') #{error.msg}
             block content 
             br
             hr 
@@ -28,4 +36,6 @@ html(lang="en")
                  p copyright &copy; don't copy me 
         script(src="/bower_components/jquery/dist/jquery.js") 
         script(src="/bower_components/bootstrap/dist/js/bootstrap.js") 
+        script(src="/js/main.js") 
+
 
