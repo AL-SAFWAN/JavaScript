@@ -50,7 +50,16 @@ Article.find({}, (e, a)=>{
     
 })
 
-// add artivles 
+//get single article 
+
+app.get('/article/:id', (req,res)=>{
+    Article.findById(req.params.id).then((a,e)=>
+    res.render('article', { article:a })
+        
+    )
+})
+
+// add article  
 app.get('/articles/add', (req, res) => {
     res.render('add_article', { title: 'Add Article' })
 })
