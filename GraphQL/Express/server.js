@@ -2,7 +2,6 @@
 const express = require('express');
 var { graphqlHTTP } = require('express-graphql');
 const schema = require('./schema.js');
-// const cors = require('cors');
 
 const app = express();
 

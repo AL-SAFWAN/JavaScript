@@ -1,0 +1,10 @@
+{
+    "customers":[
+        { "id": "1", "name": "bob", "email": "Bob@gamil.com", "age": 21 },
+        { "id": "2", "name": "bob2", "email": "Bob2@gamil.com", "age": 22 },
+        { "id": "3", "name": "bob3", "email": "Bob3@gamil.com", "age": 23 },
+        { "id": "4", "name": "bob4", "email": "Bob4@gamil.com", "age": 24 },
+        { "id": "5", "name": "bob5", "email": "Bob5@gamil.com", "age": 25 },
+        { "id": "6", "name": "bob6", "email": "Bob6@gamil.com", "age": 26 }
+    ]
+}
