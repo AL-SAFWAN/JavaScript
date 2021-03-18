@@ -18,10 +18,12 @@ html(lang="en")
             
                 #navbarSupportedContent.collapse.navbar-collapse
                     ul.navbar-nav.mr-auto
-                        li.nav-item
-                            a.nav-link(aria-current='page' href='/') Home
-                        li.nav-item
-                            a.nav-link(href='/articles/add') Add Article 
+                        if user 
+                            li.nav-item
+                                a.nav-link(aria-current='page' href='/') Home
+                            li.nav-item
+                                a.nav-link(href='/articles/add') Add Article 
+
                     ul.navbar-nav.navbar-right
                         if user 
                             li 
