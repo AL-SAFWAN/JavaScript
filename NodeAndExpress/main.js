@@ -65,6 +65,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/articles', require('./routes/articles'))
+app.use('/users', require('./routes/users'))
+
 
 const port = process.env.PORT || 3000
 

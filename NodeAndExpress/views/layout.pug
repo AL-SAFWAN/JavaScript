@@ -10,18 +10,23 @@ html(lang="en")
 
         title app
     body
-        nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
             .container-fluid
                 a.navbar-brand(href='/') MyApp
-                button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+                button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                  span.navbar-toggler-icon
+            
                 #navbarSupportedContent.collapse.navbar-collapse
-                 ul.navbar-nav.me-auto.mb-2.mb-lg-0
+                    ul.navbar-nav.mr-auto
                         li.nav-item
-                         a.nav-link.active(aria-current='page' href='/') Home
+                            a.nav-link(aria-current='page' href='/') Home
                         li.nav-item
-                         a.nav-link(href='/articles/add') Add Article 
-
+                            a.nav-link(href='/articles/add') Add Article 
+                    ul.navbar-nav.navbar-right
+                        li.nav-item.float-right
+                            a.nav-link(href='/users/register') Register
+                        li.nav-item.nav
+                            a.nav-link(href='/users/login') Register
 
         .container 
             br
