@@ -37,23 +37,23 @@ router.post('/add',
         }
     })
 
-router.get('/add', auth,(req, res) => {
+router.get('/add', auth, (req, res) => {
     res.render('add_article', { title: 'Add Article' })
 })
 
 
 //Edit a article
 router.get('/edit/:id', (req, res) => {
-    Article.findById(req.params.id).then((a, e) =>{
-        if(a.author != req.user_id){
+    Article.findById(req.params.id).then((a, e) => {
+        if (a.author != req.user_id) {
             req.flash('danger', 'Not Authorized')
             res.redirect('/')
         }
         res.render('edit_article', { title: 'Edit Article', article: a })
-}
+    }
     )
 })
-router.post('/edit/:id',auth, function (req, res) {
+router.post('/edit/:id', auth, function (req, res) {
     let article = {}
     article.title = req.body.title
     article.author = req.body.author
@@ -73,19 +73,33 @@ router.post('/edit/:id',auth, function (req, res) {
 })
 
 // Delete a article 
-router.delete('/:id',auth, (req, res) => {
-    let query = { _id: req.params.id }
-    console.log(query)
-    Article.findByIdAndDelete(query).catch(err => console.log(err))
-    res.send('Success')
+router.delete('/:id', auth, (req, res) => {
+    if (!req.user._id) {
+        res.status(500).send()
+    }
+
+    Article.findById(req.params.id).then((a, e) => {
+        if (a.author != req.user_id) {
+            req.flash('danger', 'Not Authorized')
+            res.status(500).send()
+        } else {
+            let query = { _id: req.params.id }
+            console.log(query)
+            Article.findByIdAndDelete(query).catch(err => console.log(err))
+            res.send('Success')
+        }
+    }
+    )
+
+
 })
 // Get single article 
 router.get('/:id', (req, res) => {
     Article.findById(req.params.id).then((a, e) =>
-        User.findById({_id:a.author}, (e,user)=>{
+        User.findById({ _id: a.author }, (e, user) => {
             res.render('article', { article: a, author: user.name })
         })
-        
+
 
     )
 })
@@ -93,11 +107,11 @@ router.get('/:id', (req, res) => {
 
 // access control 
 
-function auth(req,res,next){
-    if(req.isAuthenticated()){
+function auth(req, res, next) {
+    if (req.isAuthenticated()) {
         return next
     }
-    else{
+    else {
         req.flash('danger', 'Please Login')
         res.redirect('/users/login')
     }
