@@ -3,6 +3,7 @@ const path = require('path')
 const config = require('config')
 const mongoose = require('mongoose')
 const session = require('express-session')
+var passport = require('passport')
 
 // Init app 
 const app = express()
@@ -52,6 +53,15 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug')
 
 
+require('./config/passport')(passport)
+// passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('*', function (req, res, next) {
+    res.locals.user = req.user || null;
+    next();
+  });
 
 //Home Route
 app.get('/', (req, res) => {

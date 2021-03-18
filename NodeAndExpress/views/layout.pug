@@ -23,10 +23,14 @@ html(lang="en")
                         li.nav-item
                             a.nav-link(href='/articles/add') Add Article 
                     ul.navbar-nav.navbar-right
-                        li.nav-item.float-right
-                            a.nav-link(href='/users/register') Register
-                        li.nav-item.nav
-                            a.nav-link(href='/users/login') Register
+                        if user 
+                            li 
+                                a.nav-link(href="/users/logout") Logout
+                        else 
+                            li.nav-item.float-right
+                                a.nav-link(href='/users/register') Register
+                            li.nav-item.nav
+                                a.nav-link(href='/users/login') Login
 
         .container 
             br
