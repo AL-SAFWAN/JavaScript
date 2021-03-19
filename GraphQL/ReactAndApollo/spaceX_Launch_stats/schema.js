@@ -1,4 +1,4 @@
-  const {
+const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLInt,
@@ -18,9 +18,9 @@ const LaunchType = new GraphQLObjectType({
         mission_name: { type: GraphQLString },
         launch_year: { type: GraphQLString },
         launch_date_local: { type: GraphQLString },
-        launch_success: {type: GraphQLBoolean},
-        rocket: {type: RockerType}
-        
+        launch_success: { type: GraphQLBoolean },
+        rocket: { type: RockerType }
+
 
     })
 })
@@ -43,9 +43,9 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(LaunchType),
             resolve(parent, args) {
                 return axios
-                  .get('https://api.spacexdata.com/v3/launches')
-                  .then(res => res.data);
-              }
+                    .get('https://api.spacexdata.com/v3/launches')
+                    .then(res => res.data);
+            }
         },
         launch: {
             type: LaunchType,
@@ -58,26 +58,26 @@ const RootQuery = new GraphQLObjectType({
                 .then(res => res.data);
             }
           },
-          rockets: {
+        rockets: {
             type: new GraphQLList(LaunchType),
             resolve(parent, args) {
                 return axios
-                  .get('https://api.spacexdata.com/v3/rockets')
-                  .then(res => res.data);
-              }
+                    .get('https://api.spacexdata.com/v3/rockets')
+                    .then(res => res.data);
+            }
         },
         rocket: {
             type: LaunchType,
             args: {
-              id: { type: GraphQLInt }
+                id: { type: GraphQLInt }
             },
             resolve(parent, args) {
-              return axios
-                .get(`https://api.spacexdata.com/v3/launches/${args.id}`)
-                .then(res => res.data);
+                return axios
+                    .get(`https://api.spacexdata.com/v3/launches/${args.id}`)
+                    .then(res => res.data);
             }
-          },
-      
+        },
+
     }
 })
 
