@@ -17,6 +17,8 @@ import {
   SafeAreaView,
   FlatList,
   Alert,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 
 const App = () => {
@@ -55,6 +57,9 @@ const App = () => {
   );
 
   return (
+    <TouchableWithoutFeedback onPress={()=>{
+      Keyboard.dismiss()
+    }}>
     <View style={styles.container}>
       <View
         style={{
@@ -97,7 +102,7 @@ const App = () => {
           keyExtractor={item => item.key}
         />
       </SafeAreaView>
-    </View>
+    </View></TouchableWithoutFeedback>
   );
 };
 
