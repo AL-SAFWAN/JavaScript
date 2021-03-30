@@ -21,7 +21,7 @@ export class Login extends Component {
   }
   render() {
     return (
-      <View>
+      <View style={{ flex: 1, justifyContent: "center" }} >
         <TextInput
           placeholder="email"
           onChangeText={(email) => this.setState({ email })}

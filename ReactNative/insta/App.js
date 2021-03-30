@@ -12,6 +12,8 @@ import { Text, View } from "react-native";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import Add from "./components/main/Add";
+import Save from "./components/main/Save";
 
 // use environmental variable later
 const firebaseConfig = {
@@ -28,7 +30,7 @@ firebase.initializeApp(firebaseConfig);
 
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function App(props) {
   const [{ loaded, loggedIn }, setState] = useState({
     loaded: false,
     loggedIn: false,
@@ -49,6 +51,7 @@ export default function App() {
       }
     });
   }, []);
+
   if (!loaded) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
@@ -81,7 +84,26 @@ export default function App() {
   }
   return (
     <Provider store={store}>
-      <Main />
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Main">
+          <Stack.Screen
+            name="Main"
+            component={Main}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Add"
+            component={Add}
+            navigation = {props.navigation}
+          />
+          <Stack.Screen
+            name="Save"
+            component={Save}
+            navigation = {props.navigation}
+
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </Provider>
   );
 }
