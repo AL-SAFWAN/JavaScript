@@ -89,6 +89,7 @@ export default function App(props) {
           <Stack.Screen
             name="Main"
             component={Main}
+            navigation = {props.navigation}
             options={{ headerShown: false }}
           />
           <Stack.Screen
