@@ -1,18 +1,27 @@
+import { USER_POST_STATE_CHANGE, USER_STATE_CHANGE } from "../actions/type";
+
 const initialState = {
   currentUser: null,
+  posts:[]
 };
 
 export default (state = initialState, action) => {
-  return {
+
+  switch (action) {
+
+  case USER_STATE_CHANGE:
+    return {
     ...state,
     currentUser: action.currentUser,
-  };
-  // switch (action) {
+  }
+  case USER_POST_STATE_CHANGE:
+    return{
+      ...state,
+      posts: action.posts
+    }
 
-  // case typeName:
-  //     return { ...state, ...payload }
-
-  // default:
-  //     return state
-  // }
+  default:
+      return state
+  }
+    
 };

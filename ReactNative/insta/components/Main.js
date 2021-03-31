@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../redux/actions";
+import { fetchUser, fetchUserPost } from "../redux/actions";
 // import user from "../redux/reducers/user";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import Feed from "./main/Feed";
@@ -23,6 +23,8 @@ export default function Main() {
 
   useEffect(() => {
     dispatch(() => fetchUser(dispatch));
+    dispatch(() => fetchUserPost(dispatch));
+
   }, [dispatch]);
   console.log(currentUser, state);
 
