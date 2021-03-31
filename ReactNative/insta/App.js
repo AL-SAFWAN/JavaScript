@@ -107,3 +107,7 @@ export default function App(props) {
     </Provider>
   );
 }
+const helloFromMac= ()=>{
+  console.log('jklashdfkljashjdklfj')
+}
+// hello from mac book s
