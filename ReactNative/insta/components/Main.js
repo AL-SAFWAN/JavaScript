@@ -26,7 +26,7 @@ export default function Main() {
     dispatch(() => fetchUserPost(dispatch));
 
   }, [dispatch]);
-  console.log(currentUser, state);
+  console.log(currentUser, state, 'This is the start');
 
   return (
     <Tab.Navigator>

@@ -9,9 +9,8 @@ export function fetchUser(dispatch) {
     .doc(firebase.auth().currentUser.uid)
     .get()
     .then((snap) => {
-      console.log(snap,firebase.auth().currentUser.uid)
+      // console.log(snap,firebase.auth().currentUser.uid)
       if (snap.exists) {
-        console.log(snap.data(), "check here");
         dispatch({ type: USER_STATE_CHANGE, currentUser: snap.data() });
       } else {
         console.log("user does not exist");
@@ -24,7 +23,8 @@ export function fetchUserPost(dispatch) {
     .firestore()
     .collection("posts")
     .doc(firebase.auth().currentUser.uid)
-    .collection('userPosts').orderBy('creation', 'asc')
+    .collection('userPosts')
+    .orderBy('creation', 'asc')
     .get()
     .then((snap) => {
       let posts = snap.docs.map(doc =>{
@@ -32,6 +32,7 @@ export function fetchUserPost(dispatch) {
         const id = doc.id
         return {id,...data}
       })
+      console.log(posts,firebase.auth().currentUser.uid)
       dispatch({type: USER_POST_STATE_CHANGE, posts})
     });
 }
