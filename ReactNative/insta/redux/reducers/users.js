@@ -1,33 +1,33 @@
 import {
-  USER_FOLLOWING_STATE_CHANGE,
-  USER_POST_STATE_CHANGE,
-  USER_STATE_CHANGE,
+  USERS_DATA_STATE_CHANGE,
+  USER_POSTS_STATE_CHANGE,
+  CLEAR_DATA
 } from "../actions/type";
 
 const initialState = {
-  currentUser: null,
-  posts: [],
-  following: [],
+  users: [],
+  usersLoaded: 0,
 };
 
 export default (state = initialState, action) => {
-  console.log(action, state);
   switch (action.type) {
-    case USER_STATE_CHANGE:
+    case USERS_DATA_STATE_CHANGE:
       return {
         ...state,
-        currentUser: action.currentUser,
+        users: [...state.users, action.user],
       };
-    case USER_POST_STATE_CHANGE:
+    case USER_POSTS_STATE_CHANGE:
       return {
         ...state,
-        posts: action.posts,
+        usersLoaded: state.usersLoaded + 1,
+        users: state.users.map((user) => {
+          return user.uid === action.uid
+            ? { ...user, posts: action.posts }
+            : user;
+        }),
       };
-    case USER_FOLLOWING_STATE_CHANGE:
-      return {
-        ...state,
-        following: action.following,
-      };
+      case CLEAR_DATA:
+        return { initialState };
     default:
       return state;
   }

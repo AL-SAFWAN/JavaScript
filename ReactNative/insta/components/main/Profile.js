@@ -31,7 +31,7 @@ function AspectView(props) {
 
 function Profile(props) {
   const [following, setFollowing] = useState(false);
-  const { currentUser, posts  } = props;
+  const { currentUser, posts } = props;
   const dispatch = useDispatch();
 
   const state = useSelector((state) => state.user);
@@ -66,6 +66,9 @@ function Profile(props) {
       .doc(props.route.params.uid)
       .delete();
   };
+  const onLogout = () => {
+    firebase.auth().signOut()
+  };
 
   if (currentUser === null) return <View></View>;
 
@@ -74,7 +77,7 @@ function Profile(props) {
       <View style={style.containerInfo}>
         <Text>{currentUser.name}</Text>
         <Text>{currentUser.email}</Text>
-        {props.route.params.uid !== firebase.auth().currentUser.uid && (
+        {props.route.params.uid !== firebase.auth().currentUser.uid ? (
           <View>
             {following ? (
               <Button title="Following" onPress={() => onUnFollow()} />
@@ -82,6 +85,8 @@ function Profile(props) {
               <Button title="Follow" onPress={() => onFollow()} />
             )}
           </View>
+        ) : (
+          <Button title="LogOut" onPress={() => {onLogout()}} />
         )}
       </View>
       <View style={style.containerGallery}>
@@ -123,9 +128,9 @@ const style = StyleSheet.create({
 });
 
 const mapStateToProps = (store) => ({
-  currentUser: store.user.currentUser,
-  posts: store.user.posts,
-  following: store.user.following,
+  currentUser: store.userState.currentUser,
+  posts: store.userState.posts,
+  following: store.userState.following,
 });
 
 export default connect(mapStateToProps, null)(Profile);

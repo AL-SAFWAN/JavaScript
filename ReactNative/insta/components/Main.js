@@ -21,15 +21,15 @@ const Empty = () => {
 export default function Main({ navigation }) {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  const { currentUser } = state.user;
+  const { currentUser } = state.userState;
 
   useEffect(() => {
     dispatch(() => fetchUser(dispatch,firebase.auth().currentUser.uid));
     dispatch(() => fetchUserPost(dispatch,firebase.auth().currentUser.uid));
-    dispatch(() => fetchUserFollowing(dispatch));
+
+    dispatch(() => fetchUserFollowing(dispatch, state));
 
   }, [dispatch]);
-  console.log(currentUser, state, "This is the start");
 
   return (
     <Tab.Navigator>
