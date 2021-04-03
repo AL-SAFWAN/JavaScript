@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
         }),
       };
       case CLEAR_DATA:
-        return { initialState };
+        return { ...initialState };
     default:
       return state;
   }

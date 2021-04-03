@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser, fetchUserFollowing, fetchUserPost } from "../redux/actions";
+import {
+  clearData,
+  fetchUser,
+  fetchUserFollowing,
+  fetchUserPost,
+} from "../redux/actions";
 // import user from "../redux/reducers/user";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import Feed from "./main/Feed";
@@ -24,11 +29,10 @@ export default function Main({ navigation }) {
   const { currentUser } = state.userState;
 
   useEffect(() => {
-    dispatch(() => fetchUser(dispatch,firebase.auth().currentUser.uid));
-    dispatch(() => fetchUserPost(dispatch,firebase.auth().currentUser.uid));
-
+    dispatch(() => clearData(dispatch));
+    dispatch(() => fetchUser(dispatch, firebase.auth().currentUser.uid));
+    dispatch(() => fetchUserPost(dispatch, firebase.auth().currentUser.uid));
     dispatch(() => fetchUserFollowing(dispatch, state));
-
   }, [dispatch]);
 
   return (
@@ -74,7 +78,9 @@ export default function Main({ navigation }) {
         listeners={({ navigation }) => ({
           tabPress: (event) => {
             event.preventDefault();
-            navigation.navigate("Profile", {uid: firebase.auth().currentUser.uid});
+            navigation.navigate("Profile", {
+              uid: firebase.auth().currentUser.uid,
+            });
           },
         })}
         name="Profile"

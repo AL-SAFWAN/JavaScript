@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
         following: action.following,
       };
     case CLEAR_DATA:
-      return { initialState };
+      return { ...initialState };
     default:
       return state;
   }
