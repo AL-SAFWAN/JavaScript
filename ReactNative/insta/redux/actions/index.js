@@ -5,15 +5,14 @@ import {
   USER_POSTS_STATE_CHANGE,
   USER_POST_STATE_CHANGE,
   USER_STATE_CHANGE,
-  CLEAR_DATA
+  CLEAR_DATA,
 } from "./type";
 
-export function  clearData(dispatch){
-  dispatch({type:CLEAR_DATA })
+export function clearData(dispatch) {
+  dispatch({ type: CLEAR_DATA });
 }
 
 export function fetchUser(dispatch, uid) {
-
   firebase
     .firestore()
     .collection("users")
@@ -28,7 +27,6 @@ export function fetchUser(dispatch, uid) {
     });
 }
 export function fetchUserPost(dispatch, uid) {
-
   firebase
     .firestore()
     .collection("posts")
@@ -46,7 +44,7 @@ export function fetchUserPost(dispatch, uid) {
     });
 }
 export function fetchUserFollowing(dispatch, store) {
- firebase
+  firebase
     .firestore()
     .collection("following")
     .doc(firebase.auth().currentUser.uid)
@@ -57,13 +55,13 @@ export function fetchUserFollowing(dispatch, store) {
       });
       dispatch({ type: USER_FOLLOWING_STATE_CHANGE, following });
       following.forEach((uid) => {
-        dispatch(() => fetchUsersData(dispatch, store, uid));
+        dispatch(() => fetchUsersData(dispatch, store, uid, true));
       });
     });
 }
 
-export function fetchUsersData(dispatch, store, uid) {
-  ("STORE IN FETCH", store, uid);
+export function fetchUsersData(dispatch, store, uid, isPost) {
+  "STORE IN FETCH", store, uid;
   const found = store.usersState.users.some((e) => e.uid === uid);
   if (!found) {
     firebase
@@ -76,7 +74,9 @@ export function fetchUsersData(dispatch, store, uid) {
           let user = snap.data();
           user.uid = snap.id;
           dispatch({ type: USERS_DATA_STATE_CHANGE, user });
-          dispatch(() => fetchUserFollowersPost(dispatch, store, user));
+          if (isPost) {
+            dispatch(() => fetchUserFollowersPost(dispatch, store, user));
+          }
         } else {
           ("user does not exist");
         }
@@ -85,7 +85,6 @@ export function fetchUsersData(dispatch, store, uid) {
 }
 
 export function fetchUserFollowersPost(dispatch, store, user) {
-
   firebase
     .firestore()
     .collection("posts")
@@ -94,8 +93,10 @@ export function fetchUserFollowersPost(dispatch, store, user) {
     .orderBy("creation", "asc")
     .get()
     .then((snap) => {
-      const uid = snap.docs[0].ref.path.split("/")[1];
-      console.log(snap.docs[0].ref.path.split("/")[1], uid);
+      // console.log(snap.kf.query.path.segments[1]);
+
+      const uid = snap.kf.query.path.segments[1]
+      // console.log(snap.docs[0].ref.path.split("/")[1], uid);
       let posts = snap.docs.map((doc) => {
         const data = doc.data();
         const id = doc.id;

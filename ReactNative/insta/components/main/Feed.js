@@ -43,11 +43,11 @@ function Feed(props) {
   console.log(props, posts);
   useEffect(() => {
     let posts = [];
-    console.log(props.usersLoaded, props.following.length)
-    if (props.usersLoaded == props.following.length) {
+    console.log(props.usersFollowingLoaded, props.following.length);
+    if (props.usersFollowingLoaded == props.following.length) {
       props.following.forEach((uid) => {
         const user = props.users.find((e) => e.uid === uid);
-        console.log(user)
+        console.log(user);
         if (user != undefined) {
           posts = [...posts, ...user.posts];
         }
@@ -57,7 +57,7 @@ function Feed(props) {
       });
       setPost(posts);
     }
-  }, [props.usersLoaded]);
+  }, [props.usersFollowingLoaded]);
 
   return (
     <View style={style.container}>
@@ -67,11 +67,16 @@ function Feed(props) {
           horizontal={false}
           data={posts}
           renderItem={({ item }) => {
-            console.log(item)
+            console.log(item);
             return (
               <AspectView style={style.containerImage}>
                 <Text style={style.containerImage}>{item.user.name}</Text>
                 <Image style={style.image} source={{ uri: item.downloadURL }} />
+                <Text style={style.containerImage} onPress={() => {
+                  props.navigation.navigate('Comments',{postId: item.id, uid: item.user.uid})
+                }}>
+                  View comments ...
+                </Text>
               </AspectView>
             );
           }}
@@ -94,7 +99,6 @@ const style = StyleSheet.create({
   },
   containerImage: {
     // flex: 1 / 1,
-
   },
   image: {
     flex: 1,
@@ -106,7 +110,7 @@ const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
   following: store.userState.following,
   users: store.usersState.users,
-  usersLoaded: store.usersState.usersLoaded,
+  usersFollowingLoaded: store.usersState.usersFollowingLoaded,
 });
 
 export default connect(mapStateToProps, null)(Feed);

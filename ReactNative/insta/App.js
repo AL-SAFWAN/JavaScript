@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import Add from "./components/main/Add";
 import Save from "./components/main/Save";
+import Comments from "./components/main/Comments";
 
 // use environmental variable later
 const firebaseConfig = {
@@ -89,19 +90,23 @@ export default function App(props) {
           <Stack.Screen
             name="Main"
             component={Main}
-            navigation = {props.navigation}
+            navigation={props.navigation}
             options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Add"
             component={Add}
-            navigation = {props.navigation}
+            navigation={props.navigation}
           />
           <Stack.Screen
             name="Save"
             component={Save}
-            navigation = {props.navigation}
-
+            navigation={props.navigation}
+          />
+          <Stack.Screen
+            name="Comments"
+            component={Comments}
+            navigation={props.navigation}
           />
         </Stack.Navigator>
       </NavigationContainer>
