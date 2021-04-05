@@ -1,11 +1,13 @@
 import {
   USERS_DATA_STATE_CHANGE,
   USER_POSTS_STATE_CHANGE,
-  CLEAR_DATA
+  CLEAR_DATA,
+  USERS_LIKES_STATE_CHANGE,
 } from "../actions/type";
 
 const initialState = {
   users: [],
+  feed: [],
   usersFollowingLoaded: 0,
 };
 
@@ -20,14 +22,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         usersFollowingLoaded: state.usersFollowingLoaded + 1,
-        users: state.users.map((user) => {
-          return user.uid === action.uid
-            ? { ...user, posts: action.posts }
-            : user;
-        }),
+        feed: [...state.feed, ...action.posts],
       };
-      case CLEAR_DATA:
-        return { ...initialState };
+    case USERS_LIKES_STATE_CHANGE:
+      return {
+        ...state,
+        feed: state.feed.map((post) =>
+          post.id === action.postId
+            ? { ...post, currentUserLike: action.currentUserLike }
+            : post
+        ),
+      };
+    case CLEAR_DATA:
+      return { ...initialState };
     default:
       return state;
   }

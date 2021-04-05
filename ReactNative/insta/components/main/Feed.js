@@ -42,23 +42,40 @@ function Feed(props) {
   const state = useSelector((state) => state);
   console.log(props, posts);
   useEffect(() => {
-    let posts = [];
-    console.log(props.usersFollowingLoaded, props.following.length);
-    if (props.usersFollowingLoaded == props.following.length) {
-      props.following.forEach((uid) => {
-        const user = props.users.find((e) => e.uid === uid);
-        console.log(user);
-        if (user != undefined) {
-          posts = [...posts, ...user.posts];
-        }
-      });
-      posts.sort((x, y) => {
+    if (
+      props.usersFollowingLoaded == props.following.length &&
+      props.following.length !== 0
+    ) {
+      props.feed.sort((x, y) => {
         return x.creation - y.creation;
       });
-      setPost(posts);
+      setPost(props.feed);
     }
-  }, [props.usersFollowingLoaded]);
+  }, [props.usersFollowingLoaded, props.feed]);
 
+  const onLike = (uid, postId) => {
+    console.log(uid,postId)
+    firebase
+      .firestore()
+      .collection("posts")
+      .doc(uid)
+      .collection("userPosts")
+      .doc(postId)
+      .collection("likes")
+      .doc(firebase.auth().currentUser.uid)
+      .set({});
+  };
+  const onUnLike = (uid, postId) => {
+    firebase
+      .firestore()
+      .collection("posts")
+      .doc(uid)
+      .collection("userPosts")
+      .doc(postId)
+      .collection("likes")
+      .doc(firebase.auth().currentUser.uid)
+      .delete();
+  };
   return (
     <View style={style.container}>
       <View style={style.containerGallery}>
@@ -72,9 +89,30 @@ function Feed(props) {
               <AspectView style={style.containerImage}>
                 <Text style={style.containerImage}>{item.user.name}</Text>
                 <Image style={style.image} source={{ uri: item.downloadURL }} />
-                <Text style={style.containerImage} onPress={() => {
-                  props.navigation.navigate('Comments',{postId: item.id, uid: item.user.uid})
-                }}>
+                {item.currentUserLike ? (
+                  <Button
+                    title="unlike"
+                    onPress={() => {
+                      onUnLike(item.user.uid, item.id);
+                    }}
+                  />
+                ) : (
+                  <Button
+                    title="like"
+                    onPress={() => {
+                      onLike(item.user.uid, item.id);
+                    }}
+                  />
+                )}
+                <Text
+                  style={style.containerImage}
+                  onPress={() => {
+                    props.navigation.navigate("Comments", {
+                      postId: item.id,
+                      uid: item.user.uid,
+                    });
+                  }}
+                >
                   View comments ...
                 </Text>
               </AspectView>
@@ -109,7 +147,9 @@ const style = StyleSheet.create({
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
   following: store.userState.following,
-  users: store.usersState.users,
+  feed: store.usersState.feed,
+  feed: store.usersState.feed,
+
   usersFollowingLoaded: store.usersState.usersFollowingLoaded,
 });
 

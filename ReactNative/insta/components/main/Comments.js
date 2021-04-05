@@ -21,6 +21,7 @@ export default function Comments(props) {
   const state = useSelector((state) => state);
 
   useEffect(() => {
+    console.log(state)
     const matchUserToComments = (comments) => {
       const newCom = [...comments]
       newCom.forEach((comment) => {

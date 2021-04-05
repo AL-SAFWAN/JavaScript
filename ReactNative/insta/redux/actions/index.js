@@ -6,6 +6,7 @@ import {
   USER_POST_STATE_CHANGE,
   USER_STATE_CHANGE,
   CLEAR_DATA,
+  USERS_LIKES_STATE_CHANGE,
 } from "./type";
 
 export function clearData(dispatch) {
@@ -95,13 +96,40 @@ export function fetchUserFollowersPost(dispatch, store, user) {
     .then((snap) => {
       // console.log(snap.kf.query.path.segments[1]);
 
-      const uid = snap.kf.query.path.segments[1]
+      const uid = snap.kf.query.path.segments[1];
       // console.log(snap.docs[0].ref.path.split("/")[1], uid);
       let posts = snap.docs.map((doc) => {
         const data = doc.data();
         const id = doc.id;
         return { id, ...data, user };
       });
+      posts.forEach((post) => {
+        console.log(post.id);
+        dispatch(() => {
+          fetchUserFollowersLikes(dispatch, store, user, post.id);
+        });
+      });
       dispatch({ type: USER_POSTS_STATE_CHANGE, posts, uid });
+    });
+}
+
+export function fetchUserFollowersLikes(dispatch, store, user, postId) {
+  firebase
+    .firestore()
+    .collection("posts")
+    .doc(user.uid)
+    .collection("userPosts")
+    .doc(postId)
+    .collection("likes")
+    .doc(firebase.auth().currentUser.uid)
+    .onSnapshot((snap) => {
+      const postId = snap["f_"].path.segments[3];
+      // snap.kf.query.path.segments[1]
+      let currentUserLike = false;
+      if (snap.exists) {
+        currentUserLike = true;
+      }
+      console.log(snap.exists)
+      dispatch({ type: USERS_LIKES_STATE_CHANGE, postId, currentUserLike });
     });
 }
