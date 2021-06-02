@@ -149,5 +149,5 @@ console.log(
 // console.log(selectionSort([7, 3, 3, -4, 2]));
 // console.log(insertionSort([7, 3, 3, -4, 2]));
 
-// console.log(mergeSort([19, 245, 45, 5, 6, 7, 8, 25]));
+console.log(mergeSort([19, 245, 45, 5, 6, 7, 8, 25]));
 // console.log();

@@ -79,26 +79,26 @@ class Graph {
   }
 }
 
-// let g = new Graph();
+let g = new Graph();
 
-// g.addVertex("A");
-// g.addVertex("B");
-// g.addVertex("C");
-// g.addVertex("D");
-// g.addVertex("E");
-// g.addVertex("F");
+g.addVertex("A");
+g.addVertex("B");
+g.addVertex("C");
+g.addVertex("D");
+g.addVertex("E");
+g.addVertex("F");
 
-// g.addEdge("A", "B");
-// g.addEdge("A", "C");
-// g.addEdge("B", "D");
-// g.addEdge("C", "E");
-// g.addEdge("D", "E");
-// g.addEdge("D", "F");
-// g.addEdge("E", "F");
+g.addEdge("A", "B");
+g.addEdge("A", "C");
+g.addEdge("B", "D");
+g.addEdge("C", "E");
+g.addEdge("D", "E");
+g.addEdge("D", "F");
+g.addEdge("E", "F");
 
-// g.depthFirstRecursive("A");
-// g.depthFirstIterative("A");
-// g.breathFirstSearch("A");
+g.depthFirstRecursive("A");
+g.depthFirstIterative("A");
+g.breathFirstSearch("A");
 
 class WeightedGraph {
   constructor() {
@@ -178,22 +178,22 @@ class PriorityQueue {
 4. if the total distance is least, we store it as the shortest distance 
 */
 
-let g = new WeightedGraph();
+// let g = new WeightedGraph();
 
-g.addVertex("A");
-g.addVertex("B");
-g.addVertex("C");
-g.addVertex("D");
-g.addVertex("E");
-g.addVertex("F");
+// g.addVertex("A");
+// g.addVertex("B");
+// g.addVertex("C");
+// g.addVertex("D");
+// g.addVertex("E");
+// g.addVertex("F");
 
-g.addEdge("A", "B", 4);
-g.addEdge("A", "C", 2);
-g.addEdge("B", "E", 3);
-g.addEdge("C", "D", 2);
-g.addEdge("C", "F", 4);
-g.addEdge("D", "E", 3);
-g.addEdge("D", "F", 1);
-g.addEdge("E", "F", 1);
+// g.addEdge("A", "B", 4);
+// g.addEdge("A", "C", 2);
+// g.addEdge("B", "E", 3);
+// g.addEdge("C", "D", 2);
+// g.addEdge("C", "F", 4);
+// g.addEdge("D", "E", 3);
+// g.addEdge("D", "F", 1);
+// g.addEdge("E", "F", 1);
 
-g.Dijkstra("A", "F");
+// g.Dijkstra("A", "F");
